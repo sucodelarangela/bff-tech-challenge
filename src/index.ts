@@ -36,8 +36,12 @@ app.get("/health", (req, res) => {
 // app.use(errorHandler);
 
 // Inicia o servidor
-const PORT = config.port;
-app.listen(PORT, () => {
-  console.log(`🚀 BFF running on port ${PORT} in ${config.nodeEnv} mode`);
-  console.log(`🔗 API URL: ${config.apiUrl}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  const PORT = config.port;
+  app.listen(PORT, () => {
+    console.log(`🚀 BFF running on port ${PORT} in ${config.nodeEnv} mode`);
+    console.log(`🔗 API URL: ${config.apiUrl}`);
+  });
+}
+
+export default app;

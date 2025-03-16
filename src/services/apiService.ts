@@ -59,6 +59,17 @@ class ApiService {
   }
 
   // Métodos para consumir a API
+  async login(
+    email: string,
+    password: string
+  ): Promise<ApiResponse<{ token: string }>> {
+    const response = await this.api.post<Partial<User>>("/user/auth", {
+      email,
+      password,
+    });
+    return this.formatResponse<{ token: string }>(response);
+  }
+
   async getUser(): Promise<ApiResponse<User[]>> {
     const response = await this.api.get<User[]>("/user");
     return this.formatResponse<User[]>(response);

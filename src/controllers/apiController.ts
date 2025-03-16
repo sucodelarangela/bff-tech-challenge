@@ -13,6 +13,14 @@ class ApiController {
     const result = await apiService.getUser();
     res.status(StatusCodes.OK).json(result);
   }
+
+  async getAccount(req: Request, res: Response): Promise<void> {
+    const token = req.token;
+    const result = await apiService.getAccount(token!);
+    res.status(StatusCodes.OK).json(result);
+  }
+
+  // TODO: Criar controllers de transações
 }
 
 export default new ApiController();

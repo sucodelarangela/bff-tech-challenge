@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 import { config } from "../config/env";
 
+// TODO: Organizar/segregar interfaces
 interface ApiError {
   status: number;
   message: string;
@@ -13,11 +14,34 @@ interface ApiResponse<T> {
   message: string;
 }
 
-interface User {
+export interface User {
   id: string;
   username: string;
   email: string;
   password: string;
+}
+
+interface IAccount {
+  account: {
+    id: string;
+    type: string;
+    userId: string;
+  };
+  transactions: [string];
+  cards: ICards[];
+}
+
+interface ICards {
+  id: string;
+  accountId: string;
+  type: string;
+  is_blocked: boolean;
+  number: string;
+  dueDate: string;
+  functions: string;
+  cvc: string;
+  paymentDate: null;
+  name: string;
 }
 
 class ApiService {
@@ -62,18 +86,32 @@ class ApiService {
   async login(
     email: string,
     password: string
-  ): Promise<ApiResponse<{ token: string }>> {
-    const response = await this.api.post<Partial<User>>("/user/auth", {
-      email,
-      password,
-    });
-    return this.formatResponse<{ token: string }>(response);
+  ): Promise<ApiResponse<{ result: { token: string } }>> {
+    const response = await this.api.post<{ result: { token: string } }>(
+      "/user/auth",
+      {
+        email,
+        password,
+      }
+    );
+    return this.formatResponse<{ result: { token: string } }>(response);
   }
 
   async getUser(): Promise<ApiResponse<User[]>> {
     const response = await this.api.get<User[]>("/user");
     return this.formatResponse<User[]>(response);
   }
+
+  async getAccount(token: string): Promise<ApiResponse<IAccount>> {
+    const response = await this.api.get<IAccount>("/account", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return this.formatResponse<IAccount>(response);
+  }
+
+  // TODO: Criar métodos para transações
 }
 
 export default new ApiService();

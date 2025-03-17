@@ -14,13 +14,13 @@ const options = {
     },
     servers: [
       {
-        url: "/bff",
+        url: `http://localhost:${config.port}`,
         description: "Local development server",
       },
-      // {
-      //   url: `https://bff-tech-challenge.vercel.app/`,
-      //   description: "Production server",
-      // },
+      {
+        url: `https://bff-tech-challenge.vercel.app/`,
+        description: "Production server",
+      },
     ],
     components: {
       securitySchemes: {
@@ -37,13 +37,13 @@ const options = {
       },
     ],
   },
-  apis: ["./src/routes.ts", "./src/types/*.ts"], // Caminhos para os arquivos com anotações JSDoc
+  apis: ["./src/routes.ts"],
 };
 
 const specs = swaggerJsdoc(options);
 
 export const setupSwagger = (app: Express): void => {
-  app.use("/bff/docs", swaggerUi.serve, swaggerUi.setup(specs));
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
   app.use("/swagger.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(specs);

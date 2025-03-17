@@ -3,10 +3,23 @@
   "builds": [
     {
       "src": "vercel-handler.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/**", "src/**"]
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/docs/(.*)",
+      "dest": "/vercel-handler.ts",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+    },
+    {
+      "src": "/swagger.json",
+      "dest": "/vercel-handler.ts",
+      "methods": ["GET"]
+    },
     {
       "src": "/(.*)",
       "dest": "/vercel-handler.ts",

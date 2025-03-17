@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import routes from "./routes";
 import { config } from "./config/env";
+import { setupSwagger } from "./config/swagger";
 import { errorHandler } from "./middleware/errorHandler";
 
 // Inicializa o servidor Express
@@ -24,6 +25,9 @@ app.use(
 // Middleware para parsing de JSON
 app.use(express.json());
 
+// Configura Swagger
+setupSwagger(app);
+
 // Rotas da BFF
 app.use("/bff", routes);
 
@@ -39,8 +43,8 @@ app.use(errorHandler);
 if (process.env.NODE_ENV !== "production") {
   const PORT = config.port;
   app.listen(PORT, () => {
-    console.log(`🚀 BFF running on port ${PORT} in ${config.nodeEnv} mode`);
-    console.log(`🔗 API URL: ${config.apiUrl}`);
+    console.log(`🚀 BFF rodando na porta ${PORT} no modo ${config.nodeEnv}`);
+    console.log(`📚 Documentação da API: http://localhost:${PORT}/bff/docs`);
   });
 }
 

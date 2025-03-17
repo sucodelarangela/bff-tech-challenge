@@ -18,7 +18,7 @@ export interface IUser {
 }
 
 export interface IAccount {
-  account: IAccountData;
+  account: IAccountData[];
   transactions: ITransaction[];
   cards: ICards[];
 }

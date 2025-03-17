@@ -146,6 +146,10 @@ export default UserList;
 
 ## Documentação da API
 
+#### Swagger
+
+- No browser: `{{base_url}}/bff/docs` - Abre a documentação no Swagger
+
 ### Endpoints
 
 #### Usuário

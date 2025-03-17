@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import routes from "./routes";
 import { config } from "./config/env";
+import { errorHandler } from "./middleware/errorHandler";
 
 // Inicializa o servidor Express
 const app = express();
@@ -32,8 +33,7 @@ app.get("/health", (req, res) => {
 });
 
 // Middleware de tratamento de erros
-// TODO: Criar middleware
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // Inicia o servidor
 if (process.env.NODE_ENV !== "production") {

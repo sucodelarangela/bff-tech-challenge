@@ -1,56 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 import { config } from "../config/env";
-
-// TODO: Organizar/segregar interfaces
-interface ApiError {
-  status: number;
-  message: string;
-  details?: unknown;
-}
-
-interface ApiResponse<T> {
-  data: T;
-  status: number;
-  message: string;
-}
-
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-}
-
-interface IAccount {
-  account: {
-    id: string;
-    type: string;
-    userId: string;
-  };
-  transactions: [string];
-  cards: ICards[];
-}
-
-interface ICards {
-  id: string;
-  accountId: string;
-  type: string;
-  is_blocked: boolean;
-  number: string;
-  dueDate: string;
-  functions: string;
-  cvc: string;
-  paymentDate: null;
-  name: string;
-}
-
-interface ITransaction {
-  id: string;
-  accountId: string;
-  type: string;
-  value: number;
-  date: string;
-}
+import * as I from "../types";
 
 class ApiService {
   private api: AxiosInstance;
@@ -73,7 +23,7 @@ class ApiService {
   }
 
   private handleError(error: AxiosError): Promise<never> {
-    const apiError: ApiError = {
+    const apiError: I.IApiError = {
       status: error.response?.status || 500,
       message: error.message,
       details: error.response?.data,
@@ -82,7 +32,7 @@ class ApiService {
   }
 
   // Método genérico para formatação de respostas
-  private formatResponse<T>(response: AxiosResponse): ApiResponse<T> {
+  private formatResponse<T>(response: AxiosResponse): I.IApiResponse<T> {
     return {
       data: response.data.result,
       status: response.status,
@@ -94,7 +44,7 @@ class ApiService {
   async login(
     email: string,
     password: string
-  ): Promise<ApiResponse<{ result: { token: string } }>> {
+  ): Promise<I.IApiResponse<{ result: { token: string } }>> {
     const response = await this.api.post<{ result: { token: string } }>(
       "/user/auth",
       {
@@ -105,25 +55,25 @@ class ApiService {
     return this.formatResponse<{ result: { token: string } }>(response);
   }
 
-  async getUser(): Promise<ApiResponse<User[]>> {
-    const response = await this.api.get<User[]>("/user");
-    return this.formatResponse<User[]>(response);
+  async getUser(): Promise<I.IApiResponse<I.IUser[]>> {
+    const response = await this.api.get<I.IUser[]>("/user");
+    return this.formatResponse<I.IUser[]>(response);
   }
 
-  async getAccount(token: string): Promise<ApiResponse<IAccount>> {
-    const response = await this.api.get<IAccount>("/account", {
+  async getAccount(token: string): Promise<I.IApiResponse<I.IAccount>> {
+    const response = await this.api.get<I.IAccount>("/account", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return this.formatResponse<IAccount>(response);
+    return this.formatResponse<I.IAccount>(response);
   }
 
   async createTransaction(
-    payload: Partial<ITransaction>,
+    payload: Partial<I.ITransaction>,
     token: string
-  ): Promise<ApiResponse<ITransaction>> {
-    const response = await this.api.post<Partial<ITransaction>>(
+  ): Promise<I.IApiResponse<I.ITransaction>> {
+    const response = await this.api.post<Partial<I.ITransaction>>(
       "/account/transaction",
       payload,
       {
@@ -132,19 +82,22 @@ class ApiService {
         },
       }
     );
-    return this.formatResponse<ITransaction>(response);
+    return this.formatResponse<I.ITransaction>(response);
   }
 
   async getStatement(
     id: string,
     token: string
-  ): Promise<ApiResponse<IAccount>> {
-    const response = await this.api.get<IAccount>(`/account/${id}/statement`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return this.formatResponse<IAccount>(response);
+  ): Promise<I.IApiResponse<I.IAccount>> {
+    const response = await this.api.get<I.IAccount>(
+      `/account/${id}/statement`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return this.formatResponse<I.IAccount>(response);
   }
 }
 

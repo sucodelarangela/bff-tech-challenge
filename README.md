@@ -5,20 +5,22 @@ Este projeto é um Backend For Frontend (BFF) que consome uma API e disponibiliz
 ## Estrutura do Projeto
 
 ```
-bff-api/
+bff-tech-challenge/
 ├── src/
 │   ├── config/        - Configurações da aplicação
 │   ├── controllers/   - Controladores da API
+│   ├── middleware/    - Middlewares Express
 │   ├── services/      - Serviços para consumo da API
 │   ├── types/         - Definições de tipos TypeScript
-│   ├── middleware/    - Middlewares Express
 │   ├── index.ts       - Ponto de entrada da aplicação
 │   └── routes.ts      - Rotas da API
 ├── .env               - Variáveis de ambiente
 ├── .gitignore         - Arquivos ignorados pelo Git
+├── LICENSE            - Arquivo de licença de uso
 ├── package.json       - Dependências e scripts
+├── README.md          - Documentação do projeto
 ├── tsconfig.json      - Configuração do TypeScript
-└── README.md          - Documentação do projeto
+└── vercel.json        - Configuração de deploy na Vercel
 ```
 
 ## Requisitos
@@ -146,18 +148,16 @@ export default UserList;
 
 ### Endpoints
 
-#### Usuários
+#### Usuário
 
-- `GET /api/users` - Lista todos os usuários
-- `GET /api/users/:id` - Obtém um usuário específico
-- `POST /api/users` - Cria um novo usuário
-- `PUT /api/users/:id` - Atualiza um usuário existente
-- `DELETE /api/users/:id` - Remove um usuário
+- `POST /bff/login` - Autentica um usuário
+- `GET /bff/user` - Lista usuário(s)
 
-#### Produtos
+#### Conta
 
-- `GET /api/products` - Lista todos os produtos
-- `GET /api/products/:id` - Obtém um produto específico
+- `GET /bff/account` - Lista detalhes da conta
+- `GET /bff/account/:id/statement` - Lista extrato da conta
+- `GET /bff/account/transaction` - Cria uma nova transação
 
 <!--
 ## Contribuindo
@@ -168,6 +168,12 @@ export default UserList;
 4. Push para a branch (`git push origin feature/nova-feature`)
 5. Abra um Pull Request
 -->
+
+## Equipe
+
+| <img width="120" src="https://avatars.githubusercontent.com/u/86853033?v=4"> | <img width="120" src="https://avatars.githubusercontent.com/u/167245532?v=4"> | <img width="120" src="https://avatars.githubusercontent.com/u/12201855?v=4"> |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [Angela Caldas](https://github.com/sucodelarangela)                          | [Guilherme Afonso](https://github.com/guilhermeafonsogauge)                   | [Paula Macedo](https://github.com/paulamacedof)                              |
 
 ## Licença
 

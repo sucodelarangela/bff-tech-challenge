@@ -11,7 +11,7 @@ import { errorHandler } from "./middleware/errorHandler";
 const app = express();
 
 // Middleware de segurança
-app.use(helmet());
+// app.use(helmet());
 
 // Configuração do CORS
 app.use(

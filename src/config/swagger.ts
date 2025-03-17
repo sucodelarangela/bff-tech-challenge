@@ -14,13 +14,13 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${config.port}`,
+        url: "/bff",
         description: "Local development server",
       },
-      {
-        url: `https://bff-tech-challenge.vercel.app/`,
-        description: "Production server",
-      },
+      // {
+      //   url: `https://bff-tech-challenge.vercel.app/`,
+      //   description: "Production server",
+      // },
     ],
     components: {
       securitySchemes: {

@@ -43,7 +43,14 @@ const options = {
 const specs = swaggerJsdoc(options);
 
 export const setupSwagger = (app: Express): void => {
-  app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
+  app.use(
+    "/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs, {
+      customCssUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.3/swagger-ui.min.css",
+    })
+  );
   app.use("/swagger.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(specs);

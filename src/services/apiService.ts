@@ -134,6 +134,18 @@ class ApiService {
     );
     return this.formatResponse<ITransaction>(response);
   }
+
+  async getStatement(
+    id: string,
+    token: string
+  ): Promise<ApiResponse<IAccount>> {
+    const response = await this.api.get<IAccount>(`/account/${id}/statement`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return this.formatResponse<IAccount>(response);
+  }
 }
 
 export default new ApiService();

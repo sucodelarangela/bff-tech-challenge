@@ -8,16 +8,17 @@ const router = Router();
 router.post("/login", apiController.login);
 router.get("/user", apiController.getUser);
 
-// Rota de conta
+// Rotas de conta
 router.get("/account", authMiddleware, apiController.getAccount);
-
-// Rotas de transações
+router.get(
+  "/account/:id/statement",
+  authMiddleware,
+  apiController.getStatement
+);
 router.post(
-  "/create-transaction",
+  "/account/transaction",
   authMiddleware,
   apiController.createTransaction
 );
-
-// TODO: Implementar rota de extrato
 
 export default router;

@@ -15,19 +15,23 @@ class ApiController {
   }
 
   async getAccount(req: Request, res: Response): Promise<void> {
-    const token = req.token;
+    const { token } = req;
     const result = await apiService.getAccount(token!);
     res.status(StatusCodes.OK).json(result);
   }
 
   async createTransaction(req: Request, res: Response): Promise<void> {
-    const token = req.token;
-    const payload = {
-      accountId: req.body.accountId,
-      type: req.body.type,
-      value: req.body.value,
-    };
+    const { token } = req;
+    const { accountId, type, value } = req.body;
+    const payload = { accountId, type, value };
     const result = await apiService.createTransaction(payload, token!);
+    res.status(StatusCodes.OK).json(result);
+  }
+
+  async getStatement(req: Request, res: Response): Promise<void> {
+    const { token } = req;
+    const { id } = req.params;
+    const result = await apiService.getStatement(id, token!);
     res.status(StatusCodes.OK).json(result);
   }
 }

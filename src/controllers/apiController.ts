@@ -20,7 +20,16 @@ class ApiController {
     res.status(StatusCodes.OK).json(result);
   }
 
-  // TODO: Criar controllers de transações
+  async createTransaction(req: Request, res: Response): Promise<void> {
+    const token = req.token;
+    const payload = {
+      accountId: req.body.accountId,
+      type: req.body.type,
+      value: req.body.value,
+    };
+    const result = await apiService.createTransaction(payload, token!);
+    res.status(StatusCodes.OK).json(result);
+  }
 }
 
 export default new ApiController();

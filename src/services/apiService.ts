@@ -44,6 +44,14 @@ interface ICards {
   name: string;
 }
 
+interface ITransaction {
+  id: string;
+  accountId: string;
+  type: string;
+  value: number;
+  date: string;
+}
+
 class ApiService {
   private api: AxiosInstance;
 
@@ -111,7 +119,21 @@ class ApiService {
     return this.formatResponse<IAccount>(response);
   }
 
-  // TODO: Criar métodos para transações
+  async createTransaction(
+    payload: Partial<ITransaction>,
+    token: string
+  ): Promise<ApiResponse<ITransaction>> {
+    const response = await this.api.post<Partial<ITransaction>>(
+      "/account/transaction",
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return this.formatResponse<ITransaction>(response);
+  }
 }
 
 export default new ApiService();

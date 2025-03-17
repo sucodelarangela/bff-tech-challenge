@@ -11,6 +11,13 @@ router.get("/user", apiController.getUser);
 // Rota de conta
 router.get("/account", authMiddleware, apiController.getAccount);
 
-// TODO: Implementar rotas de transações
+// Rotas de transações
+router.post(
+  "/create-transaction",
+  authMiddleware,
+  apiController.createTransaction
+);
+
+// TODO: Implementar rota de extrato
 
 export default router;

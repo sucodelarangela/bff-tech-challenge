@@ -425,7 +425,7 @@ router.get(
 
 /**
  * @swagger
- * /account/transaction:
+ * /bff/account/transaction:
  *   post:
  *     summary: Cria uma nova transação
  *     tags:

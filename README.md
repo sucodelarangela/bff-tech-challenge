@@ -1,4 +1,4 @@
-BFF Tech Challenge (Backend For Frontend)
+# BFF Tech Challenge (Backend For Frontend)
 
 Este projeto é um Backend For Frontend (BFF) que consome uma API e disponibiliza os dados para uma aplicação microfrontend React + TypeScript (Tech Challeng FIAP).
 
@@ -27,6 +27,29 @@ bff-tech-challenge/
 
 - Node.js >= 16.x
 - npm ou yarn
+
+## Documentação da API
+
+#### Swagger
+
+- No browser: `{{base_url}}/bff/docs` - Abre a documentação no Swagger
+
+#### Health Check
+
+- No browser: `{{base_url}}/health` - Verifica o status da conexão
+
+### Endpoints
+
+#### Usuário
+
+- `POST /bff/login` - Autentica um usuário
+- `GET /bff/user` - Lista usuário(s)
+
+#### Conta
+
+- `GET /bff/account` - Lista detalhes da conta
+- `GET /bff/account/:id/statement` - Lista extrato da conta
+- `GET /bff/account/transaction` - Cria uma nova transação
 
 <!--
 ## Instalação
@@ -77,20 +100,23 @@ npm start
 yarn start
 ```
 
+-->
+
 ## Integrando com React
 
 Para utilizar este BFF em sua aplicação React + TypeScript:
 
 1. Configure o URL do BFF em seu cliente React (por exemplo, em um arquivo `.env`):
+
 ```
-REACT_APP_API_URL=http://localhost:3001/api
+REACT_APP_API_URL=http://localhost:3001/bff
 ```
 
 2. Crie um serviço para consumir o BFF:
 
 ```typescript
 // api.ts
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -102,8 +128,8 @@ export default api;
 3. Utilize o serviço em seus componentes:
 
 ```typescript
-import { useEffect, useState } from 'react';
-import api from './api';
+import { useEffect, useState } from "react";
+import api from "./api";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -113,7 +139,7 @@ function UserList() {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await api.get('/users');
+        const response = await api.get("/users");
         setUsers(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -132,7 +158,7 @@ function UserList() {
     <div>
       <h1>Lista de Usuários</h1>
       <ul>
-        {users.map(user => (
+        {users.map((user) => (
           <li key={user.id}>{user.name}</li>
         ))}
       </ul>
@@ -142,26 +168,6 @@ function UserList() {
 
 export default UserList;
 ```
--->
-
-## Documentação da API
-
-#### Swagger
-
-- No browser: `{{base_url}}/bff/docs` - Abre a documentação no Swagger
-
-### Endpoints
-
-#### Usuário
-
-- `POST /bff/login` - Autentica um usuário
-- `GET /bff/user` - Lista usuário(s)
-
-#### Conta
-
-- `GET /bff/account` - Lista detalhes da conta
-- `GET /bff/account/:id/statement` - Lista extrato da conta
-- `GET /bff/account/transaction` - Cria uma nova transação
 
 <!--
 ## Contribuindo

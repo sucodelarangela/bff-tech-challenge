@@ -2,6 +2,12 @@
 
 Este projeto é um Backend For Frontend (BFF) que consome uma API e disponibiliza os dados para uma aplicação microfrontend React + TypeScript (Tech Challeng FIAP).
 
+> **NOTA:**
+>
+> _O backend da aplicação está hosteado no free tier da plataforma [**Render**](https://render.com/), que pode hibernar o servidor por tempo de inatividade. Nesse caso, pode ocorrer da API devolver um erro com [**Status 504**](https://http.dog/504) nos primeiros acessos._
+>
+> _Caso isto ocorra, **tente novamente em alguns segundos** enquanto o servidor "acorda"._
+
 ## Estrutura do Projeto
 
 ```

@@ -60,13 +60,27 @@ class ApiService {
     return this.formatResponse<I.IUser[]>(response);
   }
 
-  async getAccount(token: string): Promise<I.IApiResponse<I.IAccount>> {
+  async getAccount(token: string): Promise<I.IApiResponse<I.IAccountData>> {
     const response = await this.api.get<I.IAccount>("/account", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return this.formatResponse<I.IAccount>(response);
+
+    const formattedResponse = this.formatResponse<I.IAccount>(response);
+    let accountData = formattedResponse.data.account;
+
+    if (Array.isArray(accountData)) {
+      accountData = accountData[0] || null;
+    }
+
+    const result: I.IApiResponse<I.IAccountData> = {
+      data: accountData,
+      status: formattedResponse.status,
+      message: formattedResponse.message,
+    };
+
+    return result;
   }
 
   async createTransaction(

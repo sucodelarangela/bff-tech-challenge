@@ -240,6 +240,8 @@ router.get("/user", apiController.getUser);
  *     summary: Retorna as informações de conta do usuário
  *     tags:
  *       - Account
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Conta encontrada carregada com sucesso.
@@ -355,6 +357,8 @@ router.get("/account", authMiddleware, apiController.getAccount);
  *     summary: "Recupera extrato de transações de uma conta"
  *     tags:
  *       - Account
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -430,6 +434,8 @@ router.get(
  *     summary: Cria uma nova transação
  *     tags:
  *       - Account
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:

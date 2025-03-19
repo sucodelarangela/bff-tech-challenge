@@ -18,12 +18,12 @@ export interface IUser {
 }
 
 export interface IAccount {
-  account: IAccountData[];
+  account: IAccountData;
   transactions: ITransaction[];
   cards: ICards[];
 }
 
-interface IAccountData {
+export interface IAccountData {
   id: string;
   type: string;
   userId: string;

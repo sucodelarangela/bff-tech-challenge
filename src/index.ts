@@ -16,9 +16,10 @@ const app = express();
 // Configuração do CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "*",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: "*",
+    credentials: true
   })
 );
 

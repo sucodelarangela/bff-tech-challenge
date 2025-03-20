@@ -49,13 +49,15 @@ bff-tech-challenge/
 #### Usuário
 
 - `POST /bff/login` - Autentica um usuário
+- `POST /bff/user/create` - Cria um novo usuário
 - `GET /bff/users` - Lista todos os usuários
-- `GET /bff/users/:id` - Retorna as informações do usuário
+- `GET /bff/user/:id` - Retorna as informações do usuário
 
 #### Conta
 
 - `GET /bff/account` - Lista detalhes da conta
 - `GET /bff/account/:id/statement` - Lista extrato da conta
+- `GET /bff/account/:id/last-transactions` - Retorna as últimas transações da conta
 - `GET /bff/account/transaction` - Cria uma nova transação
 
 <!--
@@ -146,7 +148,7 @@ function UserList() {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await api.get("/users");
+        const response = await api.get("/bff/users");
         setUsers(response.data.data);
         setLoading(false);
       } catch (err) {

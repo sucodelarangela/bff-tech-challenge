@@ -7,276 +7,398 @@
 	},
 	"item": [
 		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"testes\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "public_routes",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.environment.set('token', response.token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/login",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
 					],
-					"path": [
-						"bff",
-						"login"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"teste@gmail.com\",\r\n    \"password\": \"testes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/login",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar usuários",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Usuário Teste\",\r\n    \"email\": \"teste1@gmail.com\",\r\n    \"password\": \"testes1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/user/create",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar usuários",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/users",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/user/:id",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67d5cb96f273c147ae3b0267"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"description": "Rotas que não necessitam de token."
 		},
 		{
-			"name": "Criar usuários",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Usuário Teste\",\r\n    \"email\": \"teste1@gmail.com\",\r\n    \"password\": \"testes1\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "protected_routes",
+			"item": [
+				{
+					"name": "Buscar Conta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/account",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"account"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/user/create",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"user",
-						"create"
-					]
+				{
+					"name": "Buscar extrato da conta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/account/:id/statement",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"account",
+								":id",
+								"statement"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67d5cb96f273c147ae3b0269"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar últimas transações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/account/:id/last-transactions",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"account",
+								":id",
+								"last-transactions"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "67d5cb96f273c147ae3b0269"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria transação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": \"67d5cb96f273c147ae3b0269\",\r\n    \"value\": 1000,\r\n    \"type\": \"Credit\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/account/transaction",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"account",
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir transação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/account/transaction?accountId=67d5cb96f273c147ae3b0269&transactionId=67d8309cb81412f5ab66911b",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"account",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "67d5cb96f273c147ae3b0269"
+								},
+								{
+									"key": "transactionId",
+									"value": "67d8309cb81412f5ab66911b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar transação",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": \"67d5cb96f273c147ae3b0269\",\r\n    \"value\": 100,\r\n    \"type\": \"Credit\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bff-tech-challenge.vercel.app/bff/account/transaction/:transactionId",
+							"protocol": "https",
+							"host": [
+								"bff-tech-challenge",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"bff",
+								"account",
+								"transaction",
+								":transactionId"
+							],
+							"variable": [
+								{
+									"key": "transactionId",
+									"value": "67d80d5bfd1ff8af40e95051"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
+			],
+			"description": "Rotas que precisam do token para funcionar."
+		}
+	],
+	"variable": [
 		{
-			"name": "Listar usuários",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/users",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar usuário",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/user/:id",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"user",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "67db530e697fd89d34612b23"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar Conta",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IklzcmFlbCAyIiwiZW1haWwiOiJ0ZXN0ZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6InRlc3RlcyIsImlkIjoiNjdkNWNiOTZmMjczYzE0N2FlM2IwMjY3IiwiaWF0IjoxNzQyMjQyNTc0LCJleHAiOjE3NDIyODU3NzR9.y9c4ywxre0AMcWEN3uStynYBmRZMnWnf2YKeUea5j7A",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/account",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"account"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Cria transação",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IklzcmFlbCAyIiwiZW1haWwiOiJ0ZXN0ZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6InRlc3RlcyIsImlkIjoiNjdkNWNiOTZmMjczYzE0N2FlM2IwMjY3IiwiaWF0IjoxNzQyMjQyNTc0LCJleHAiOjE3NDIyODU3NzR9.y9c4ywxre0AMcWEN3uStynYBmRZMnWnf2YKeUea5j7A",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"accountId\": \"67d5cb96f273c147ae3b0269\",\r\n    \"value\": 1000,\r\n    \"type\": \"Credit\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/account/transaction",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"account",
-						"transaction"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar extrato da conta",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IklzcmFlbCAyIiwiZW1haWwiOiJ0ZXN0ZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6InRlc3RlcyIsImlkIjoiNjdkNWNiOTZmMjczYzE0N2FlM2IwMjY3IiwiaWF0IjoxNzQyMjQyNTc0LCJleHAiOjE3NDIyODU3NzR9.y9c4ywxre0AMcWEN3uStynYBmRZMnWnf2YKeUea5j7A",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/account/:id/statement",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"account",
-						":id",
-						"statement"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "67d5cb96f273c147ae3b0269"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Buscar últimas transações",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IklzcmFlbCAyIiwiZW1haWwiOiJ0ZXN0ZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6InRlc3RlcyIsImlkIjoiNjdkNWNiOTZmMjczYzE0N2FlM2IwMjY3IiwiaWF0IjoxNzQyMjQyNTc0LCJleHAiOjE3NDIyODU3NzR9.y9c4ywxre0AMcWEN3uStynYBmRZMnWnf2YKeUea5j7A",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/account/:id/last-transactions",
-					"protocol": "https",
-					"host": [
-						"bff-tech-challenge",
-						"vercel",
-						"app"
-					],
-					"path": [
-						"bff",
-						"account",
-						":id",
-						"last-transactions"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "67d5cb96f273c147ae3b0269"
-						}
-					]
-				}
-			},
-			"response": []
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikpvw6NvIGRhcyBOZXZlcyIsImVtYWlsIjoidGVzdGVAZ21haWwuY29tIiwicGFzc3dvcmQiOiJ0ZXN0ZXMiLCJpZCI6IjY3ZDVjYjk2ZjI3M2MxNDdhZTNiMDI2NyIsImlhdCI6MTc0MjUwMDY1NywiZXhwIjoxNzQyNTQzODU3fQ.wy13H-JRIoMEFIWaR4WxeIadaqigI5vQbVam-S2H1VQ",
+			"type": "default"
 		}
 	]
 }

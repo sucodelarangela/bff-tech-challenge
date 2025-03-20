@@ -13,20 +13,22 @@ Este projeto é um Backend For Frontend (BFF) que consome uma API e disponibiliz
 ```
 bff-tech-challenge/
 ├── src/
-│   ├── config/        - Configurações da aplicação
-│   ├── controllers/   - Controladores da API
-│   ├── middleware/    - Middlewares Express
-│   ├── services/      - Serviços para consumo da API
-│   ├── types/         - Definições de tipos TypeScript
-│   ├── index.ts       - Ponto de entrada da aplicação
-│   └── routes.ts      - Rotas da API
-├── .env               - Variáveis de ambiente
-├── .gitignore         - Arquivos ignorados pelo Git
-├── LICENSE            - Arquivo de licença de uso
-├── package.json       - Dependências e scripts
-├── README.md          - Documentação do projeto
-├── tsconfig.json      - Configuração do TypeScript
-└── vercel.json        - Configuração de deploy na Vercel
+│   ├── config/              - Configurações da aplicação
+│   ├── controllers/         - Controladores da API
+│   ├── middleware/          - Middlewares Express
+│   ├── services/            - Serviços para consumo da API
+│   ├── types/               - Definições de tipos TypeScript
+│   ├── index.ts             - Ponto de entrada da aplicação
+│   └── routes.ts            - Rotas da API
+├── .env                     - Variáveis de ambiente
+├── .gitignore               - Arquivos ignorados pelo Git
+├── postman_collection.json  - JSON de collection do Postman
+├── LICENSE                  - Arquivo de licença de uso
+├── package.json             - Dependências e scripts
+├── README.md                - Documentação do projeto
+├── tsconfig.json            - Configuração do TypeScript
+├── vercel-handler.ts        - Definição de rota para Vercel
+└── vercel.json              - Configuração de deploy na Vercel
 ```
 
 ## Requisitos
@@ -58,7 +60,9 @@ bff-tech-challenge/
 - `GET /bff/account` - Lista detalhes da conta
 - `GET /bff/account/:id/statement` - Lista extrato da conta
 - `GET /bff/account/:id/last-transactions` - Retorna as últimas transações da conta
-- `GET /bff/account/transaction` - Cria uma nova transação
+- `POST /bff/account/transaction` - Cria uma nova transação
+- `DELETE /bff/account/transaction` - Delete uma transação
+- `PUT /bff/account/transaction/:transactionId` - Atualiza uma transação
 
 <!--
 ## Instalação
@@ -67,9 +71,10 @@ bff-tech-challenge/
 ```bash
 git clone https://github.com/sucodelarangela/bff-tech-challenge.git
 cd api-bff
-```
+````
 
 2. Instale as dependências:
+
 ```bash
 npm install
 # ou
@@ -77,6 +82,7 @@ yarn install
 ```
 
 3. Configure as variáveis de ambiente copiando o arquivo `.env.example` para `.env` e ajustando os valores:
+
 ```bash
 cp .env.example .env
 ```
@@ -177,16 +183,6 @@ function UserList() {
 
 export default UserList;
 ```
-
-<!--
-## Contribuindo
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
--->
 
 ## Equipe
 

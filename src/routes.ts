@@ -53,14 +53,6 @@ const router = Router();
  *               userId:
  *                 type: string
  *                 description: Id do titular
- *         transactions:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/Transaction'
- *         cards:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/Card'
  *
  *     Transaction:
  *       type: object
@@ -81,40 +73,6 @@ const router = Router();
  *           type: date-time
  *           description: Data da transação
  *
- *     Card:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           description: Id do cartão
- *         accountId:
- *           type: string
- *           description: Id da conta
- *         type:
- *           type: string
- *           description: Tipo do cartão
- *         is_blocked:
- *           type: boolean
- *           description: Status de bloqueio do cartão
- *         number:
- *           type: string
- *           description: Número do cartão
- *         dueDate:
- *           type: date-time
- *           description: Data de vencimento do cartão
- *         functions:
- *           type: string
- *           enum: [Debit, Credit]
- *           description: Funcionalidade do cartão
- *         cvc:
- *           type: string
- *           description: Código de segurança do cartão
- *         paymentDate:
- *           type: date-time
- *           description: Data de pagamento do cartão
- *         name:
- *           type: string
- *           description: Nome do titular
  *
  *     ApiResponse:
  *       type: object
@@ -195,9 +153,9 @@ router.post("/login", apiController.login);
 
 /**
  * @swagger
- * /bff/user:
+ * /bff/users:
  *   get:
- *     summary: Retorna o(s) usuário(s).
+ *     summary: Retorna todos os usuários.
  *     tags:
  *       - User
  *     responses:
@@ -209,20 +167,18 @@ router.post("/login", apiController.login);
  *               type: object
  *               properties:
  *                 data:
- *                   type: object
- *                   properties:
- *                     username:
- *                       type: string
- *                       description: "Nome do titular da conta"
- *                     email:
- *                       type: string
- *                       description: "E-mail do titular da conta"
- *                     password:
- *                       type: string
- *                       description: "Senha do titular da conta"
- *                     id:
- *                       type: string
- *                       description: "Id do titular da conta"
+ *                   id:
+ *                     type: string
+ *                     description: ID único do usuário
+ *                   username:
+ *                     type: string
+ *                     description: Nome do usuário
+ *                   email:
+ *                     type: string
+ *                     description: Email do usuário
+ *                   password:
+ *                     type: string
+ *                     description: Senha do usuário
  *                 status:
  *                   type: integer
  *                   description: "Código de status HTTP"
@@ -230,7 +186,80 @@ router.post("/login", apiController.login);
  *                   type: string
  *                   description: "Mensagem associada à resposta"
  */
-router.get("/user", apiController.getUser);
+router.get("/users", apiController.getUsers);
+
+/**
+ * @swagger
+ * /bff/user/{id}:
+ *   get:
+ *     summary: "Retorna as informações do usuário"
+ *     tags:
+ *       - User
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: "ID do usuário logado"
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: "Usuário carregado com sucesso"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: string
+ *                             description: "ID da transação"
+ *                           accountId:
+ *                             type: string
+ *                             description: "ID da conta associada à transação"
+ *                           type:
+ *                             type: string
+ *                             description: "Tipo da transação (Débito ou Crédito)"
+ *                           value:
+ *                             type: number
+ *                             description: "Valor da transação"
+ *                           date:
+ *                             type: string
+ *                             format: date-time
+ *                             description: "Data da transação"
+ *                 status:
+ *                   type: integer
+ *                   description: "Código de status HTTP"
+ *                 message:
+ *                   type: string
+ *                   description: "Mensagem associada à resposta"
+ *       401:
+ *         description: Acesso não autorizado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   description: 401
+ *                 message:
+ *                   type: string
+ *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
+ *                 details:
+ *                   type: any
+ *                   description: null
+ */
+router.get("/user/:id", apiController.getUser);
 
 // Rotas de conta
 /**

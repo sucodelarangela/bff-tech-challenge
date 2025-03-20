@@ -49,7 +49,8 @@ bff-tech-challenge/
 #### Usuário
 
 - `POST /bff/login` - Autentica um usuário
-- `GET /bff/user` - Lista usuário(s)
+- `GET /bff/users` - Lista todos os usuários
+- `GET /bff/users/:id` - Retorna as informações do usuário
 
 #### Conta
 

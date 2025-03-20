@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"name": "Buscar usuários",
+			"name": "Listar usuários",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -54,7 +54,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://bff-tech-challenge.vercel.app/bff/user",
+					"raw": "https://bff-tech-challenge.vercel.app/bff/users",
 					"protocol": "https",
 					"host": [
 						"bff-tech-challenge",
@@ -63,7 +63,35 @@
 					],
 					"path": [
 						"bff",
-						"user"
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar usuário",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bff-tech-challenge.vercel.app/bff/user/:id",
+					"protocol": "https",
+					"host": [
+						"bff-tech-challenge",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"bff",
+						"user",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67db530e697fd89d34612b23"
+						}
 					]
 				}
 			},

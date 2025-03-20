@@ -55,9 +55,28 @@ class ApiService {
     return this.formatResponse<{ result: { token: string } }>(response);
   }
 
-  async getUser(): Promise<I.IApiResponse<I.IUser[]>> {
+  async getUsers(): Promise<I.IApiResponse<I.IUser[]>> {
     const response = await this.api.get<I.IUser[]>("/user");
     return this.formatResponse<I.IUser[]>(response);
+  }
+
+  async getUser(id: string): Promise<I.IApiResponse<I.IUser>> {
+    const response = await this.api.get<I.IUser>("/user");
+
+    const formattedResponse = this.formatResponse<I.IUser>(response);
+    let userData = formattedResponse.data;
+
+    if (Array.isArray(userData)) {
+      userData = userData.find((user) => user.id === id) || null;
+    }
+
+    const result: I.IApiResponse<I.IUser> = {
+      data: userData,
+      status: formattedResponse.status,
+      message: userData ? formattedResponse.message : "Usuário não encontrado",
+    };
+
+    return result;
   }
 
   async getAccount(token: string): Promise<I.IApiResponse<I.IAccountData>> {

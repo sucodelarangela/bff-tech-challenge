@@ -13,13 +13,27 @@ class ApiController {
     }
   }
 
-  async getUser(
+  async getUsers(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const result = await apiService.getUser();
+      const result = await apiService.getUsers();
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const { id } = req.params;
+    try {
+      const result = await apiService.getUser(id);
       res.status(StatusCodes.OK).json(result);
     } catch (err) {
       next(err);

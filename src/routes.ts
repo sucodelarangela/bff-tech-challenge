@@ -153,6 +153,67 @@ router.post("/login", apiController.login);
 
 /**
  * @swagger
+ * /bff/user/create:
+ *   post:
+ *     summary: Cria um novo usuário.
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: Nome do usuário titular da conta
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: E-mail do usuário
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: Senha do usuário
+ *     responses:
+ *       200:
+ *         description: Usuário criado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: Id do usuário criado
+ *                     username:
+ *                       type: string
+ *                       description: Nome do usuário criado
+ *                     email:
+ *                       type: string
+ *                       description: E-mail do usuário criado
+ *                     password:
+ *                       type: string
+ *                       description: Senha do usuário criado
+ *                 status:
+ *                   type: integer
+ *                   description: "Código de status HTTP"
+ *                 message:
+ *                   type: string
+ *                   description: "Mensagem associada à resposta"
+ */
+router.post("/user/create", apiController.createUser);
+
+/**
+ * @swagger
  * /bff/users:
  *   get:
  *     summary: Retorna todos os usuários.

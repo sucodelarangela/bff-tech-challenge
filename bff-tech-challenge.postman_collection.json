@@ -37,6 +37,37 @@
 			"response": []
 		},
 		{
+			"name": "Criar usuários",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Usuário Teste\",\r\n    \"email\": \"teste1@gmail.com\",\r\n    \"password\": \"testes1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://bff-tech-challenge.vercel.app/bff/user/create",
+					"protocol": "https",
+					"host": [
+						"bff-tech-challenge",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"bff",
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Listar usuários",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -170,7 +201,7 @@
 			"response": []
 		},
 		{
-			"name": "Busca extrato da conta",
+			"name": "Buscar extrato da conta",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -197,6 +228,45 @@
 						"account",
 						":id",
 						"statement"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "67d5cb96f273c147ae3b0269"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar últimas transações",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IklzcmFlbCAyIiwiZW1haWwiOiJ0ZXN0ZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6InRlc3RlcyIsImlkIjoiNjdkNWNiOTZmMjczYzE0N2FlM2IwMjY3IiwiaWF0IjoxNzQyMjQyNTc0LCJleHAiOjE3NDIyODU3NzR9.y9c4ywxre0AMcWEN3uStynYBmRZMnWnf2YKeUea5j7A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bff-tech-challenge.vercel.app/bff/account/:id/last-transactions",
+					"protocol": "https",
+					"host": [
+						"bff-tech-challenge",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"bff",
+						"account",
+						":id",
+						"last-transactions"
 					],
 					"variable": [
 						{

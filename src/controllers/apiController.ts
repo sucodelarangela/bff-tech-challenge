@@ -13,6 +13,20 @@ class ApiController {
     }
   }
 
+  async createUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { username, email, password } = req.body;
+      const result = await apiService.createUser(username, email, password);
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async getUsers(
     req: Request,
     res: Response,

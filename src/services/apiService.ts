@@ -55,6 +55,19 @@ class ApiService {
     return this.formatResponse<{ result: { token: string } }>(response);
   }
 
+  async createUser(
+    username: string,
+    email: string,
+    password: string
+  ): Promise<I.IApiResponse<I.IUser>> {
+    const response = await this.api.post<I.IUser>("/user", {
+      username,
+      email,
+      password,
+    });
+    return this.formatResponse<I.IUser>(response);
+  }
+
   async getUsers(): Promise<I.IApiResponse<I.IUser[]>> {
     const response = await this.api.get<I.IUser[]>("/user");
     return this.formatResponse<I.IUser[]>(response);

@@ -84,6 +84,27 @@ class ApiController {
     }
   }
 
+  async updateTransaction(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { token } = req;
+      const { transactionId } = req.params;
+      const { accountId, type, value } = req.body;
+      const payload = { transactionId, accountId, type, value };
+      const result = await apiService.updateTransaction(
+        payload,
+        transactionId,
+        token!
+      );
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async getStatement(
     req: Request,
     res: Response,

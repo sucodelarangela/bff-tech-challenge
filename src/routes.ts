@@ -323,6 +323,55 @@ router.post(
   authMiddleware,
   apiController.createTransaction
 );
+
+/**
+ * @swagger
+ * /bff/account/transaction/{transactionId}:
+ *   put:
+ *     summary: Atualiza uma transação
+ *     tags:
+ *       - Account
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: transactionId
+ *         required: true
+ *         description: "ID da transação a ser atualizada"
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               accountId:
+ *                 type: string
+ *                 description: ID da conta associada à transação.
+ *               type:
+ *                 type: string
+ *                 enum: [Debit, Credit, Expense]
+ *                 description: Tipo da transação (Débito, Crédito ou Despesa).
+ *               value:
+ *                 type: number
+ *                 description: Valor da transação.
+ *             required:
+ *               - accountId
+ *               - type
+ *               - value
+ *     responses:
+ *       201:
+ *         description: Transação criada com sucesso
+ *       401:
+ *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
+ */
+router.put(
+  "/account/transaction/:transactionId",
+  authMiddleware,
+  apiController.updateTransaction
+);
 // #endregion
 
 export default router;

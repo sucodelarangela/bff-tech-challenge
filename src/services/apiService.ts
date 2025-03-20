@@ -131,6 +131,23 @@ class ApiService {
     return this.formatResponse<I.ITransaction>(response);
   }
 
+  async updateTransaction(
+    payload: Partial<I.ITransaction>,
+    transactionId: string,
+    token: string
+  ): Promise<I.IApiResponse<I.ITransaction>> {
+    const response = await this.api.put<Partial<I.ITransaction>>(
+      `/account/transaction/update/${transactionId}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return this.formatResponse<I.ITransaction>(response);
+  }
+
   async getStatement(
     id: string,
     token: string

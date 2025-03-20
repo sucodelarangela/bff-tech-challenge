@@ -102,7 +102,8 @@ const router = Router();
  *           description: Mensagem descritiva
  */
 
-// Rotas de usuário
+// #region Rotas de usuário
+
 /**
  * @swagger
  * /bff/login:
@@ -131,23 +132,8 @@ const router = Router();
  *     responses:
  *       200:
  *         description: Usuário autenticado com sucesso.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     token:
- *                       type: string
- *                       description: "Token do usuário autenticado"
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
+ *       401:
+ *         description: Usuário não encontrado.
  */
 router.post("/login", apiController.login);
 
@@ -183,32 +169,6 @@ router.post("/login", apiController.login);
  *     responses:
  *       200:
  *         description: Usuário criado com sucesso.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                       description: Id do usuário criado
- *                     username:
- *                       type: string
- *                       description: Nome do usuário criado
- *                     email:
- *                       type: string
- *                       description: E-mail do usuário criado
- *                     password:
- *                       type: string
- *                       description: Senha do usuário criado
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
  */
 router.post("/user/create", apiController.createUser);
 
@@ -222,30 +182,6 @@ router.post("/user/create", apiController.createUser);
  *     responses:
  *       200:
  *         description: Usuário carregado com sucesso.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   id:
- *                     type: string
- *                     description: ID único do usuário
- *                   username:
- *                     type: string
- *                     description: Nome do usuário
- *                   email:
- *                     type: string
- *                     description: Email do usuário
- *                   password:
- *                     type: string
- *                     description: Senha do usuário
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
  */
 router.get("/users", apiController.getUsers);
 
@@ -267,62 +203,12 @@ router.get("/users", apiController.getUsers);
  *           type: string
  *     responses:
  *       200:
- *         description: "Usuário carregado com sucesso"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     user:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             description: "ID da transação"
- *                           accountId:
- *                             type: string
- *                             description: "ID da conta associada à transação"
- *                           type:
- *                             type: string
- *                             description: "Tipo da transação (Débito ou Crédito)"
- *                           value:
- *                             type: number
- *                             description: "Valor da transação"
- *                           date:
- *                             type: string
- *                             format: date-time
- *                             description: "Data da transação"
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
- *       401:
- *         description: Acesso não autorizado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   description: 401
- *                 message:
- *                   type: string
- *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
- *                 details:
- *                   type: any
- *                   description: null
+ *         description: Usuário carregado com sucesso /ou/ Usuário não encontrado.
  */
 router.get("/user/:id", apiController.getUser);
+// #endregion
 
-// Rotas de conta
+// #region Rotas de conta
 /**
  * @swagger
  * /bff/account:
@@ -335,108 +221,8 @@ router.get("/user/:id", apiController.getUser);
  *     responses:
  *       200:
  *         description: Conta encontrada carregada com sucesso.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     account:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             description: "Id da conta"
- *                           type:
- *                             type: string
- *                             description: "Tipo de conta"
- *                           userId:
- *                             type: string
- *                             description: "Id do titular da conta"
- *                     transactions:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             description: "Id da transação"
- *                           accountId:
- *                             type: string
- *                             description: "Id da conta"
- *                           type:
- *                             type: string
- *                             description: "Tipo de conta"
- *                           value:
- *                             type: number
- *                             description: "Valor da transação"
- *                           date:
- *                             type: string
- *                             format: date-time
- *                             description: "Data e hora da transação"
- *                     cards:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             description: "Id do cartão"
- *                           accountId:
- *                             type: string
- *                             description: "Id da conta"
- *                           type:
- *                             type: string
- *                             description: "Tipo do cartão"
- *                           is_blocked:
- *                             type: boolean
- *                             description: "Status de bloqueio do cartão"
- *                           number:
- *                             type: string
- *                             description: "Número do cartão"
- *                           dueDate:
- *                             type: string
- *                             format: date-time
- *                             description: "Data de vencimento do cartão"
- *                           functions:
- *                             type: string
- *                             description: "Função do cartão"
- *                           cvc:
- *                             type: string
- *                             description: "Código de segurança do cartão"
- *                           paymentDate:
- *                             type: string
- *                             nullable: true
- *                             description: null
- *                           name:
- *                             type: string
- *                             description: "Nome do titular do cartão"
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
  *       401:
- *         description: Acesso não autorizado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   description: 401
- *                 message:
- *                   type: string
- *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
- *                 details:
- *                   type: any
- *                   description: null
+ *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
  */
 router.get("/account", authMiddleware, apiController.getAccount);
 
@@ -458,58 +244,9 @@ router.get("/account", authMiddleware, apiController.getAccount);
  *           type: string
  *     responses:
  *       200:
- *         description: "Transações carregadas com sucesso"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     transactions:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             description: "ID da transação"
- *                           accountId:
- *                             type: string
- *                             description: "ID da conta associada à transação"
- *                           type:
- *                             type: string
- *                             description: "Tipo da transação (Débito ou Crédito)"
- *                           value:
- *                             type: number
- *                             description: "Valor da transação"
- *                           date:
- *                             type: string
- *                             format: date-time
- *                             description: "Data da transação"
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
+ *         description: Transações carregadas com sucesso
  *       401:
- *         description: Acesso não autorizado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   description: 401
- *                 message:
- *                   type: string
- *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
- *                 details:
- *                   type: any
- *                   description: null
+ *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
  */
 router.get(
   "/account/:id/statement",
@@ -536,57 +273,8 @@ router.get(
  *     responses:
  *       200:
  *         description: "Transações carregadas com sucesso"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     transactions:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             description: "ID da transação"
- *                           accountId:
- *                             type: string
- *                             description: "ID da conta associada à transação"
- *                           type:
- *                             type: string
- *                             description: "Tipo da transação (Débito ou Crédito)"
- *                           value:
- *                             type: number
- *                             description: "Valor da transação"
- *                           date:
- *                             type: string
- *                             format: date-time
- *                             description: "Data da transação"
- *                 status:
- *                   type: integer
- *                   description: "Código de status HTTP"
- *                 message:
- *                   type: string
- *                   description: "Mensagem associada à resposta"
  *       401:
- *         description: Acesso não autorizado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   description: 401
- *                 message:
- *                   type: string
- *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
- *                 details:
- *                   type: any
- *                   description: null
+ *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
  */
 router.get(
   "/account/:id/last-transactions",
@@ -627,58 +315,14 @@ router.get(
  *     responses:
  *       201:
  *         description: Transação criada com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     id:
- *                       type: string
- *                       description: ID da transação.
- *                     accountId:
- *                       type: string
- *                       description: ID da conta associada à transação.
- *                     type:
- *                       type: string
- *                       description: Tipo da transação.
- *                     value:
- *                       type: number
- *                       description: Valor da transação.
- *                     date:
- *                       type: string
- *                       format: date-time
- *                       description: Data da transação.
- *                 status:
- *                   type: integer
- *                   description: Status da resposta.
- *                 message:
- *                   type: string
- *                   description: Mensagem de sucesso.
  *       401:
- *         description: Acesso não autorizado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   description: 401
- *                 message:
- *                   type: string
- *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
- *                 details:
- *                   type: string
- *                   nullable: true
- *                   description: null
+ *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
  */
 router.post(
   "/account/transaction",
   authMiddleware,
   apiController.createTransaction
 );
+// #endregion
 
 export default router;

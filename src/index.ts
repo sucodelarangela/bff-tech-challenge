@@ -19,7 +19,7 @@ app.use(
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: "*",
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -45,7 +45,7 @@ if (process.env.NODE_ENV !== "production") {
   const PORT = config.port;
   app.listen(PORT, () => {
     console.log(`🚀 BFF rodando na porta ${PORT} no modo ${config.nodeEnv}`);
-    console.log(`📚 Documentação da API: http://localhost:${PORT}/bff/docs`);
+    console.log(`📚 Documentação da API: http://localhost:${PORT}/docs`);
   });
 }
 

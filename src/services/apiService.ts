@@ -132,6 +132,31 @@ class ApiService {
     );
     return this.formatResponse<I.IAccount>(response);
   }
+
+  async getLastTransactions(
+    id: string,
+    token: string
+  ): Promise<I.IApiResponse<I.ITransaction[]>> {
+    const response = await this.api.get<I.IAccount>(
+      `/account/${id}/statement`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const formattedResponse = this.formatResponse<I.IAccount>(response);
+    let transactions = formattedResponse.data.transactions.slice(0, 3);
+
+    const result: I.IApiResponse<I.ITransaction[]> = {
+      data: transactions,
+      status: formattedResponse.status,
+      message: formattedResponse.message,
+    };
+
+    return result;
+  }
 }
 
 export default new ApiService();

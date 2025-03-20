@@ -458,6 +458,83 @@ router.get(
 
 /**
  * @swagger
+ * /bff/account/{id}/last-transactions:
+ *   get:
+ *     summary: "Recupera as últimas transações da conta."
+ *     tags:
+ *       - Account
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: "ID da conta para a qual recuperar o extrato"
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: "Transações carregadas com sucesso"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     transactions:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: string
+ *                             description: "ID da transação"
+ *                           accountId:
+ *                             type: string
+ *                             description: "ID da conta associada à transação"
+ *                           type:
+ *                             type: string
+ *                             description: "Tipo da transação (Débito ou Crédito)"
+ *                           value:
+ *                             type: number
+ *                             description: "Valor da transação"
+ *                           date:
+ *                             type: string
+ *                             format: date-time
+ *                             description: "Data da transação"
+ *                 status:
+ *                   type: integer
+ *                   description: "Código de status HTTP"
+ *                 message:
+ *                   type: string
+ *                   description: "Mensagem associada à resposta"
+ *       401:
+ *         description: Acesso não autorizado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   description: 401
+ *                 message:
+ *                   type: string
+ *                   description: "Acesso não autorizado. Token não fornecido ou formato inválido."
+ *                 details:
+ *                   type: any
+ *                   description: null
+ */
+router.get(
+  "/account/:id/last-transactions",
+  authMiddleware,
+  apiController.getLastTransactions
+);
+
+/**
+ * @swagger
  * /bff/account/transaction:
  *   post:
  *     summary: Cria uma nova transação

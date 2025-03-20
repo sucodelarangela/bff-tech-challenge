@@ -84,6 +84,21 @@ class ApiController {
       next(err);
     }
   }
+
+  async getLastTransactions(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { token } = req;
+      const { id } = req.params;
+      const result = await apiService.getLastTransactions(id, token!);
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default new ApiController();

@@ -8,7 +8,7 @@ class ApiService {
   constructor() {
     this.api = axios.create({
       baseURL: config.apiUrl,
-      timeout: 10000,
+      timeout: 15000,
       headers: {
         "Content-Type": "application/json",
       },
@@ -146,6 +146,24 @@ class ApiService {
       }
     );
     return this.formatResponse<I.ITransaction>(response);
+  }
+
+  async deleteTransaction(
+    accountId: string,
+    transactionId: string,
+    token: string
+  ): Promise<I.IApiResponse<I.IDeleteTransactionResponse>> {
+    const response = await this.api.delete<I.IDeleteTransactionResponse>(
+      `/account/transaction/delete?accountId=${accountId}&transactionId=${transactionId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return this.formatResponse<I.IApiResponse<I.IDeleteTransactionResponse>>(
+      response
+    );
   }
 
   async getStatement(

@@ -105,6 +105,25 @@ class ApiController {
     }
   }
 
+  async deleteTransaction(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { token } = req;
+      const { accountId, transactionId } = req.query;
+      const result = await apiService.deleteTransaction(
+        accountId as string,
+        transactionId as string,
+        token!
+      );
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async getStatement(
     req: Request,
     res: Response,

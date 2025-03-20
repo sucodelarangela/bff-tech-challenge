@@ -49,3 +49,8 @@ export interface ITransaction {
   value: number;
   date: string;
 }
+
+export interface IDeleteTransactionResponse {
+  status: number;
+  message: string;
+}

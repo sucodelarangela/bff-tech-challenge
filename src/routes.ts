@@ -363,7 +363,7 @@ router.post(
  *               - value
  *     responses:
  *       201:
- *         description: Transação criada com sucesso
+ *         description: Transação atualizada com sucesso
  *       401:
  *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
  */
@@ -371,6 +371,40 @@ router.put(
   "/account/transaction/:transactionId",
   authMiddleware,
   apiController.updateTransaction
+);
+
+/**
+ * @swagger
+ * /bff/account/transaction:
+ *   delete:
+ *     summary: Deleta uma transação
+ *     tags:
+ *       - Account
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: accountId
+ *         required: true
+ *         description: ID da conta a qual a transação pertence
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: transactionId
+ *         required: true
+ *         description: ID da transação a ser deletada
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Transação excluída com sucesso
+ *       401:
+ *         description: Acesso não autorizado. Token não fornecido ou formato inválido.
+ */
+router.delete(
+  "/account/transaction",
+  authMiddleware,
+  apiController.deleteTransaction
 );
 // #endregion
 

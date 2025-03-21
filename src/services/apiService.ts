@@ -195,7 +195,9 @@ class ApiService {
     );
 
     const formattedResponse = this.formatResponse<I.IAccount>(response);
-    let transactions = formattedResponse.data.transactions.slice(0, 3);
+    let transactions = formattedResponse.data.transactions
+      .reverse()
+      .slice(0, 3);
 
     const result: I.IApiResponse<I.ITransaction[]> = {
       data: transactions,

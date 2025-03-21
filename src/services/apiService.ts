@@ -169,7 +169,7 @@ class ApiService {
   async getStatement(
     id: string,
     token: string
-  ): Promise<I.IApiResponse<I.IAccount>> {
+  ): Promise<I.IApiResponse<I.ITransaction[]>> {
     const response = await this.api.get<I.IAccount>(
       `/account/${id}/statement`,
       {
@@ -178,7 +178,17 @@ class ApiService {
         },
       }
     );
-    return this.formatResponse<I.IAccount>(response);
+
+    const formattedResponse = this.formatResponse<I.IAccount>(response);
+    let statement = formattedResponse.data.transactions.reverse();
+
+    const result: I.IApiResponse<I.ITransaction[]> = {
+      data: statement,
+      status: formattedResponse.status,
+      message: formattedResponse.message,
+    };
+
+    return result;
   }
 
   async getLastTransactions(

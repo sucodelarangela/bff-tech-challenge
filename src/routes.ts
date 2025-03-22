@@ -308,6 +308,9 @@ router.get(
  *               value:
  *                 type: number
  *                 description: Valor da transação.
+ *               anexo:
+ *                 type: string
+ *                 description: Base-64 do anexo
  *             required:
  *               - accountId
  *               - type
@@ -357,6 +360,9 @@ router.post(
  *               value:
  *                 type: number
  *                 description: Valor da transação.
+ *               anexo:
+ *                 type: string
+ *                 description: Base-64 do anexo
  *             required:
  *               - accountId
  *               - type

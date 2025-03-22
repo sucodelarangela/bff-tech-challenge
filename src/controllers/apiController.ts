@@ -75,8 +75,8 @@ class ApiController {
   ): Promise<void> {
     try {
       const { token } = req;
-      const { accountId, type, value } = req.body;
-      const payload = { accountId, type, value };
+      const { accountId, type, value, anexo } = req.body;
+      const payload = { accountId, type, value, anexo };
       const result = await apiService.createTransaction(payload, token!);
       res.status(StatusCodes.OK).json(result);
     } catch (err) {
@@ -92,8 +92,8 @@ class ApiController {
     try {
       const { token } = req;
       const { transactionId } = req.params;
-      const { accountId, type, value } = req.body;
-      const payload = { transactionId, accountId, type, value };
+      const { accountId, type, value, anexo } = req.body;
+      const payload = { transactionId, accountId, type, value, anexo };
       const result = await apiService.updateTransaction(
         payload,
         transactionId,

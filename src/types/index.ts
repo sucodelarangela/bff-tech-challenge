@@ -48,6 +48,7 @@ export interface ITransaction {
   type: string;
   value: number;
   date: string;
+  anexo?: string;
 }
 
 export interface IDeleteTransactionResponse {
